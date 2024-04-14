@@ -7,6 +7,7 @@ type Account struct {
 	Uid       string `gorm:"not null; unique; size:64"`
 	Profile   Profile
 	ProfileId uint
+	Scripts   []Script
 }
 
 type Profile struct {
