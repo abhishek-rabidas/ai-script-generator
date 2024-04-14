@@ -17,6 +17,10 @@ import (
 type ScriptService struct {
 }
 
+func NewScriptService() *ScriptService {
+	return &ScriptService{}
+}
+
 func (s ScriptService) GenerateNewScript(req views.NewScriptRequest) (string, error) {
 
 	account := model.Account{}

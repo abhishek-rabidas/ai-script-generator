@@ -7,7 +7,6 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"net/http"
 )
 
 func init() {
@@ -26,9 +25,9 @@ func SetupServer() {
 	handler.NewUserHandler(e.Group("/user"), userService)
 
 	apiGroup := e.Group("/api")
-	apiGroup.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Server is up")
-	})
+
+	scriptService := service.NewScriptService()
+	handler.NewScriptHandler(apiGroup.Group("/script"), scriptService)
 
 	config.SetupDatabase()
 
