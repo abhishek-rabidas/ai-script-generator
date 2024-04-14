@@ -15,8 +15,7 @@ func NewUserService() *UserService {
 	return &UserService{}
 }
 
-func (u UserService) CreateUser(req views.UserCreateRequest) views.UserResponse {
-
+func (u UserService) CreateUser(req views.UserCreateRequest) (views.UserResponse, error) {
 	profile := model.Profile{
 		Uid:   ulid.Make().String(),
 		Wps:   0,
@@ -33,7 +32,8 @@ func (u UserService) CreateUser(req views.UserCreateRequest) views.UserResponse 
 
 	if err != nil {
 		log.Error(err)
+		return views.UserResponse{}, err
 	}
 
-	return views.NewUserResponse(account)
+	return views.NewUserResponse(account), nil
 }
