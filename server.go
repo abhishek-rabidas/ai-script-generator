@@ -2,6 +2,8 @@ package main
 
 import (
 	"ai-script-generator/config"
+	"ai-script-generator/handler"
+	"ai-script-generator/service"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -20,8 +22,10 @@ func SetupServer() {
 	e := echo.New()
 	e.Use(middleware.CORS())
 
-	apiGroup := e.Group("/api")
+	userService := service.NewUserService()
+	handler.NewUserHandler(e.Group("/user"), userService)
 
+	apiGroup := e.Group("/api")
 	apiGroup.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Server is up")
 	})
