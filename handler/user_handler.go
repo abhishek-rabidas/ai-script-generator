@@ -2,6 +2,7 @@ package handler
 
 import (
 	"ai-script-generator/service"
+	"ai-script-generator/views"
 	"github.com/labstack/echo/v4"
 )
 
@@ -18,5 +19,7 @@ func NewUserHandler(e *echo.Group, service *service.UserService) *UserHandler {
 }
 
 func (u UserHandler) createAccount(c echo.Context) error {
-	return c.String(200, "Account creation")
+	req := views.UserCreateRequest{}
+	c.Bind(&req)
+	return c.JSON(200, u.service.CreateUser(req))
 }

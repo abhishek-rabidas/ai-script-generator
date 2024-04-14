@@ -11,6 +11,7 @@ type Account struct {
 
 type Profile struct {
 	gorm.Model
+	Uid   string `gorm:"not null; unique; size:64"`
 	Wps   int
 	Name  string `gorm:"not null; size:64"`
 	Email string `gorm:"not null; size:64"`
