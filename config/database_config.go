@@ -35,7 +35,7 @@ func SetupDatabase() {
 }
 
 func migrate() {
-	err := DB.AutoMigrate(model.Account{}, model.Profile{})
+	err := DB.AutoMigrate(model.Account{}, model.Profile{}, model.Script{})
 	if err != nil {
 		log.Error(err)
 	}

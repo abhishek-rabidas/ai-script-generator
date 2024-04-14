@@ -9,9 +9,11 @@ import (
 	"errors"
 	"fmt"
 	"github.com/charmbracelet/log"
+	"github.com/oklog/ulid/v2"
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strings"
 )
 
 type ScriptService struct {
@@ -37,9 +39,27 @@ func (s ScriptService) GenerateNewScript(req views.NewScriptRequest) (string, er
 
 	res, err := getChatCompletionResult(prompt)
 
+	res = strings.ReplaceAll(res, "Voiceover:", "")
+
 	if err != nil {
 		log.Error(err)
 		return "", err
+	}
+
+	script := model.Script{
+		Uid:      ulid.Make().String(),
+		Account:  account,
+		Platform: req.Platform,
+		Duration: req.Duration,
+		Topic:    req.Topic,
+		Content:  res,
+	}
+
+	err = config.DB.Create(&script).Error
+
+	if err != nil {
+		log.Error(err)
+		return "", errors.New("failed to save script")
 	}
 
 	return res, nil
