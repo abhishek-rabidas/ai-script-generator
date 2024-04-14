@@ -50,7 +50,7 @@ func (u UserHandler) captureVoice(c echo.Context) error {
 
 	ext := strings.Split(file.Filename, ".")[1]
 
-	if ext != ".mp3" {
+	if ext != "mp3" {
 		return views.GenerateApiResponse(c, http.StatusInternalServerError, "unsupported Audio Format only .mp3 is supported", nil)
 	}
 
@@ -75,9 +75,11 @@ func (u UserHandler) captureVoice(c echo.Context) error {
 		return views.GenerateApiResponse(c, http.StatusInternalServerError, "failed to store audio", nil)
 	}
 
+	err = u.service.AnalyzeVoice("data/"+file.Filename, c.FormValue("uid"))
+
 	if err != nil {
 		return views.GenerateApiResponse(c, http.StatusInternalServerError, err.Error(), nil)
 	} else {
-		return views.GenerateApiResponse(c, http.StatusOK, "Audio stored", nil)
+		return views.GenerateApiResponse(c, http.StatusOK, "Audio Analysis Successful", nil)
 	}
 }
