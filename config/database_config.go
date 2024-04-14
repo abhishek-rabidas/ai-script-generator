@@ -1,6 +1,7 @@
 package config
 
 import (
+	"ai-script-generator/model"
 	"fmt"
 	"github.com/charmbracelet/log"
 	"gorm.io/driver/mysql"
@@ -29,4 +30,13 @@ func SetupDatabase() {
 	}
 
 	DB = db
+
+	migrate()
+}
+
+func migrate() {
+	err := DB.AutoMigrate(model.Account{}, model.Profile{})
+	if err != nil {
+		log.Error(err)
+	}
 }
