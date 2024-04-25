@@ -4,6 +4,15 @@
 Generate personalized dialogue scripts in seconds!
 
 
+## Roadmap
+
+- Record your voice
+
+- AI will analyze your voice to adapt itself for generating scripts
+
+- Select topic, platform and duration to generate script
+
+
 ## API Reference
 
 #### Get all items
@@ -23,8 +32,7 @@ Generate personalized dialogue scripts in seconds!
 
 [0:00-0:03] "Top 5 Free Video Editing Softwares"
 
-[0:04-0:07]
-"Are you looking for affordable video editing software?"
+[0:04-0:07] "Are you looking for affordable video editing software?"
 
 [0:08-0:11]
 "Here are our top 5 picks for free video editing softwares."
