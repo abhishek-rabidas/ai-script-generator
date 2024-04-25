@@ -15,7 +15,7 @@ Generate personalized dialogue scripts in seconds!
 
 ## API Reference
 
-#### Get all items
+#### Generate script
 
 ```http
   POST /api/script/create
