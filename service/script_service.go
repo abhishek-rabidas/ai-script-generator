@@ -40,6 +40,8 @@ func (s ScriptService) GenerateNewScript(req views.NewScriptRequest) (string, er
 	res, err := getChatCompletionResult(prompt)
 
 	res = strings.ReplaceAll(res, "Voiceover:", "")
+	res = strings.ReplaceAll(res, "Voice over:", "")
+	res = strings.ReplaceAll(res, "Voice Over:", "")
 
 	if err != nil {
 		log.Error(err)
@@ -61,6 +63,8 @@ func (s ScriptService) GenerateNewScript(req views.NewScriptRequest) (string, er
 		log.Error(err)
 		return "", errors.New("failed to save script")
 	}
+
+	writeOutput(res)
 
 	return res, nil
 }
@@ -135,4 +139,19 @@ type response struct {
 		CompletionTokens int `json:"completion_tokens"`
 		TotalTokens      int `json:"total_tokens"`
 	} `json:"usage"`
+}
+
+func writeOutput(response string) {
+	file, err := os.Create("scripts/" + ulid.Make().String() + ".txt")
+	if err != nil {
+		return
+	}
+
+	defer file.Close()
+
+	_, err = file.WriteString(response)
+	if err != nil {
+		return
+	}
+	log.Info("Script saved")
 }
